@@ -1,15 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import pandas as pd
 import os
-
-
-# In[2]:
-
 
 #Global
 DirectoryParamStr = 'DirectoryName'
@@ -21,15 +14,6 @@ DataDirStr = '/data/'
 #DictDirStr = '/dict/'
 
 StudyListings = {
-    "CARDIA" : {
-        DirectoryParamStr : 'CARDIA',
-        DataFileParamStr: 'phs000285.v3.pht001554.v3.p2.CARDIA_Cohort_Subject.MULTI.txt',
-        ConsentParamStr: 'Consent'
-    },
-    "HCHS" : {
-        DirectoryParamStr : 'HCHS_SOL',
-        DataFileParamStr: 'phs000810.v1.pht004713.v1.p1.HCHS_SOL_Cohort_Subject.MULTI.txt'
-    },
     "Framingham Heart Study" : {
         DirectoryParamStr : 'Framingham',
         DataFileParamStr : 'phs000007.v30.pht000182.v13.p11.Framingham_Subject.MULTI.txt',
@@ -45,7 +29,7 @@ StudyListings = {
         DataFileParamStr : 'phs000200.v11.pht000982.v8.p3.WHI_Subject.MULTI.txt'
     },
     "Mult-Ethnic Study of Atherosclerosis (MESA)" : {
-        DirectoryParamStr : 'MESA',
+        DirectoryParamStr : 'MESA-New',
         DataFileParamStr : 'phs000209.v13.pht001108.v4.p3.MESA_Subject.MULTI.txt'
     },
     "Atherosclerosis Risk in Communities (ARIC)" : {
@@ -181,8 +165,7 @@ StudyListings = {
     "Genetic Study of Atherosclerosis Risk (GeneSTAR)" : {
         DirectoryParamStr : 'GeneSTAR',
         DataFileParamStr : 'phs001074.v1.pht005339.v1.p1.GeneSTAR_Platelet_Aggregation_iPS_MKs_Subject.MULTI.txt',
-        DictFileParamStr : 'phs001074.v1.pht005342.v1.GeneSTAR_Platelet_Aggregation_iPS_MKs_Subject_Phenotypes.data_dict.xml',
-        ConsentParamStr : 'SUBJECT_ID' #Because of a shift in the columns in this file
+        DictFileParamStr : 'phs001074.v1.pht005342.v1.GeneSTAR_Platelet_Aggregation_iPS_MKs_Subject_Phenotypes.data_dict.xml'
     },
     "Genetics and Epidemiology of Asthma in Barbados (BAGS)" : {
         DirectoryParamStr : 'BAGS',
@@ -269,10 +252,6 @@ StudyListings = {
     }
 }
 
-
-# In[3]:
-
-
 def GetPatientAndConsentCountsForStudy(CallCount, StudyName, Directry, FileName, ConsentParam, SubjIdParam):
     print str(CallCount) + ". Processing " + StudyName
     print "Subject File: " + FileName
@@ -304,9 +283,6 @@ def GetPatientAndConsentCountsForStudy(CallCount, StudyName, Directry, FileName,
     return str(PatientCt), str(ConsentLevels), str(Consent0PatientCt), str(Consent1PatientCt), str(Consent2PatientCt), str(Consent3PatientCt)
 
 
-# In[4]:
-
-
 def CompileDataFrameWithResults():
     ResultDF = pd.DataFrame(columns=['StudyName', 'AccessionNumber', 'PatientCount', 'ConsentLevels', 'Consent0PatientCount', 'Consent1PatientCount', 'Consent2PatientCount', 'Consent3PatientCount'])
     SerNum = 1
@@ -331,30 +307,10 @@ def CompileDataFrameWithResults():
     return ResultDF
 
 
-# In[5]:
-
-
 def main():
     ResultDF = CompileDataFrameWithResults()
     ResultDF.to_csv(r'PatientsCountsByConsentsForFreeze5bStudies.csv', header=True, index=None)
 
 
-# In[6]:
-
 
 main()
-
-
-# In[ ]:
-
-
-#tree = ET.parse(dictFileName)
-#root = tree.getroot()
-#i = 0
-#for variable in root.iter('variable'):
-#    i = i + 1
-#    name = variable.find('name').text
-#    desc = variable.find('description').text
-#    dtype = variable.find('type').text
-#    print(str(i) + ". " + variable.tag, variable.attrib, name, desc, dtype)
-
